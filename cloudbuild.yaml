@@ -1,6 +1,6 @@
 # https://cloud.google.com/cloud-build/docs/build-config?hl=ja
 steps:
-  # Initialize
+  # Permission
   - name: hashicorp/terraform:0.12.24
     entrypoint: terraform
     dir: permission
@@ -27,6 +27,37 @@ steps:
   - name: hashicorp/terraform:0.12.24
     entrypoint: terraform
     dir: permission
+    args:
+      - apply
+      - tfplan
+      - -no-color
+  # Backend
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: backend
+    args:
+      - init
+  # Switch Workspace
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: backend
+    args:
+      - workspace
+      - select
+      - $_ENVIRONMENT
+      - -no-color
+  # Plan
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: backend
+    args:
+      - plan
+      - -out=tfplan
+      - -no-color
+  # Apply
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: backend
     args:
       - apply
       - tfplan

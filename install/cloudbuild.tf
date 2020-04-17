@@ -7,7 +7,7 @@ resource "google_project_iam_member" "cloudbuild_iam" {
 }
 
 # ----------------------------------------------------------------------------------------------
-# Google Cloud Build - Initialize
+# Google Cloud Build - Terraform
 # ----------------------------------------------------------------------------------------------
 resource "google_cloudbuild_trigger" "terraform" {
   provider = google-beta
