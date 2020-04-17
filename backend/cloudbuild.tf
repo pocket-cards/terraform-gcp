@@ -4,7 +4,6 @@
 resource "google_cloudbuild_trigger" "backend" {
   provider = google-beta
 
-  filename    = local.cloudbuild_trigger_filename
   description = "Backend"
 
   github {
