@@ -2,9 +2,8 @@
 # Project - Cloud Build Role - Project IAM Admin
 # ----------------------------------------------------------------------------------------------
 resource "google_project_iam_member" "cloudbuild_iam" {
-  project = local.project_id
-  role    = "roles/resourcemanager.projectIamAdmin"
-  member  = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
+  role   = "roles/resourcemanager.projectIamAdmin"
+  member = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
 }
 
 # ----------------------------------------------------------------------------------------------
