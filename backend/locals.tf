@@ -5,13 +5,18 @@ locals {
   environment    = terraform.workspace
   remote_install = data.terraform_remote_state.install.outputs
 
-  repo_owner   = local.remote_install.repo_owner
-  repo_backend = local.remote_install.repo_backend
+  # ----------------------------------------------------------------------------------------------
+  # Terraform Remote State
+  # ----------------------------------------------------------------------------------------------
+  repo_owner     = local.remote_install.repo_owner
+  repo_backend   = local.remote_install.repo_backend
+  project_id     = local.remote_install.project_id
+  project_number = data.google_project.this.number
+  project_name   = data.google_project.this.name
 
   # ----------------------------------------------------------------------------------------------
   # CloudBuild
   # ----------------------------------------------------------------------------------------------
-
   cloudbuild_trigger_filename = "cloudbuild.yaml"
 
   cloudbuild_tags = {
@@ -27,13 +32,6 @@ locals {
     staging : "^master$",
     prod : null
   }
-
-  # ----------------------------------------------------------------------------------------------
-  # Terraform Remote State
-  # ----------------------------------------------------------------------------------------------
-  project_id     = data.google_project.this.project_id
-  project_number = data.google_project.this.number
-  project_name   = data.google_project.this.name
 }
 
 data "google_project" "this" {
