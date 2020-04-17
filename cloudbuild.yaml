@@ -1,0 +1,40 @@
+# https://cloud.google.com/cloud-build/docs/build-config?hl=ja
+steps:
+  # Initialize
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: architecture
+    args:
+      - init
+  # Switch Workspace
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: architecture
+    args:
+      - workspace
+      - select
+      - $_ENVIRONMENT
+      - -no-color
+  # Plan
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: architecture
+    args:
+      - plan
+      - -out=tfplan
+      - -no-color
+  # Apply
+  - name: hashicorp/terraform:0.12.24
+    entrypoint: terraform
+    dir: architecture
+    args:
+      - apply
+      - tfplan
+      - -no-color
+  # Update Cloud Endpoint
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - endpoints
+      - services
+      - deploy
+      - apigateway/api_$_ENVIRONMENT.yaml

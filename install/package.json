@@ -1,0 +1,9 @@
+{
+  "name": "initialize",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "terraform apply -auto-approve=true",
+    "plan": "terraform plan"
+  }
+}
