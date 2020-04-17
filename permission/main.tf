@@ -18,3 +18,16 @@ terraform {
     prefix = "permission"
   }
 }
+
+# ----------------------------------------------------------------------------------------------
+# Terraform Remote State
+# ----------------------------------------------------------------------------------------------
+data "terraform_remote_state" "install" {
+  backend   = "gcs"
+  workspace = terraform.workspace
+
+  config = {
+    bucket = "terraform-settings"
+    prefix = "install"
+  }
+}
